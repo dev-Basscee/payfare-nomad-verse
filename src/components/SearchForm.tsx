@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -48,7 +47,7 @@ const SearchForm = () => {
           </TabsTrigger>
           <TabsTrigger value="transportation" className="data-[state=active]:bg-white rounded-md py-3">
             <Car className="h-4 w-4 mr-2" />
-            Transportation
+            Taxi
           </TabsTrigger>
         </TabsList>
         
@@ -329,7 +328,7 @@ const SearchForm = () => {
                 className="w-full bg-payfare-600 hover:bg-payfare-700 text-white py-6"
                 size="lg"
               >
-                Search Transportation
+                Search Taxi Services
               </Button>
             </div>
           </form>

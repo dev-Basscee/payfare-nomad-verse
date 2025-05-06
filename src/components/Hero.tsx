@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import SearchForm from "./SearchForm";
 
@@ -14,7 +13,7 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
           >
-            Travel with <span className="text-payfare-300">Transparency</span>
+            Explore Without <span className="text-payfare-300">Limits</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: -20 }}
@@ -23,7 +22,7 @@ const Hero = () => {
             className="text-lg md:text-xl max-w-2xl mx-auto text-gray-100"
           >
             The first decentralized travel booking platform built on blockchain technology.
-            Book flights, accommodations, and transportation seamlessly.
+            Book flights, accommodations, and taxi services seamlessly.
           </motion.p>
         </div>
         
