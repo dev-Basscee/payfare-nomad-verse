@@ -32,6 +32,7 @@ const WalletConnectButton = () => {
       <Button 
         onClick={handleConnect}
         className="bg-payfare-600 hover:bg-payfare-700 text-white"
+        size="default"
       >
         Connect Wallet
       </Button>
