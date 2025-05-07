@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Taxi,
+  Car,
   Calendar,
   Clock,
   MapPin,
@@ -60,7 +60,7 @@ const TaxiPage = () => {
             <Card className="rounded-2xl shadow-lg">
               <CardHeader>
                 <CardTitle className="text-xl flex items-center">
-                  <Taxi className="mr-2 h-5 w-5 text-payfare-600" />
+                  <Car className="mr-2 h-5 w-5 text-payfare-600" />
                   Book Your Pickup
                 </CardTitle>
               </CardHeader>

@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { 
   Plane, 
   Hotel, 
-  Taxi, 
+  Car, 
   Settings, 
   ChevronLeft, 
   ChevronRight
@@ -18,7 +18,7 @@ const Sidebar = () => {
   const menuItems = [
     { icon: Plane, label: "My Flights", path: "/dashboard/flights" },
     { icon: Hotel, label: "Accommodation", path: "/dashboard/accommodations" },
-    { icon: Taxi, label: "Pick-Up Service", path: "/dashboard/taxi" },
+    { icon: Car, label: "Pick-Up Service", path: "/dashboard/taxi" },
     { icon: Settings, label: "Settings", path: "/dashboard/settings" }
   ];
   

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plane, Hotel, Taxi, CircleDollarSign } from "lucide-react";
+import { Plane, Hotel, Car, CircleDollarSign } from "lucide-react";
 
 const Dashboard = () => {
   useEffect(() => {
@@ -65,7 +65,7 @@ const Dashboard = () => {
             <Card className="rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader className="pb-2">
                 <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center mb-2">
-                  <Taxi className="h-6 w-6 text-amber-600" />
+                  <Car className="h-6 w-6 text-amber-600" />
                 </div>
                 <CardTitle className="text-lg">Pick-up Services</CardTitle>
               </CardHeader>
