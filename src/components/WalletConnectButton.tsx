@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,19 +13,18 @@ import {
 const WalletConnectButton = () => {
   const [connected, setConnected] = useState<boolean>(false);
   const [walletAddress, setWalletAddress] = useState<string>("");
+  const navigate = useNavigate();
   
   const handleConnect = () => {
-    // Simulate wallet connection
-    const mockAddress = "0x" + Math.random().toString(16).slice(2, 12);
-    setWalletAddress(mockAddress);
-    setConnected(true);
-    toast.success("Wallet connected successfully!");
+    // Redirect to login page
+    navigate("/login");
   };
   
   const handleDisconnect = () => {
     setConnected(false);
     setWalletAddress("");
     toast.info("Wallet disconnected");
+    navigate("/");
   };
   
   if (!connected) {
@@ -47,11 +47,11 @@ const WalletConnectButton = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem className="cursor-pointer" onClick={() => toast.info("Profile coming soon")}>
-          Profile
+        <DropdownMenuItem className="cursor-pointer" onClick={() => navigate("/dashboard")}>
+          Dashboard
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={() => toast.info("My Bookings coming soon")}>
-          My Bookings
+        <DropdownMenuItem className="cursor-pointer" onClick={() => navigate("/dashboard/settings")}>
+          Settings
         </DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer text-red-500" onClick={handleDisconnect}>
           Disconnect

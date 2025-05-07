@@ -10,6 +10,12 @@ import Flights from "./pages/Flights";
 import Accommodations from "./pages/Accommodations";
 import Transportation from "./pages/Transportation";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import AccommodationsPage from "./pages/Accommodations";
+import TaxiPage from "./pages/Taxi";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +29,15 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/flights" element={<Flights />} />
-            <Route path="/accommodations" element={<Accommodations />} />
+            <Route path="/accommodations" element={<Transportation />} />
             <Route path="/transportation" element={<Transportation />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/flights" element={<Flights />} />
+            <Route path="/dashboard/accommodations" element={<AccommodationsPage />} />
+            <Route path="/dashboard/taxi" element={<TaxiPage />} />
+            <Route path="/dashboard/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
