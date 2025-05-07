@@ -7,7 +7,9 @@ import {
   Car, 
   Settings, 
   ChevronLeft, 
-  ChevronRight
+  ChevronRight,
+  History,
+  Home
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,9 +18,11 @@ const Sidebar = () => {
   const location = useLocation();
   
   const menuItems = [
+    { icon: Home, label: "Dashboard Home", path: "/dashboard" },
     { icon: Plane, label: "My Flights", path: "/dashboard/flights" },
     { icon: Hotel, label: "Accommodation", path: "/dashboard/accommodations" },
     { icon: Car, label: "Pick-Up Service", path: "/dashboard/taxi" },
+    { icon: History, label: "Activity History", path: "/dashboard/history" },
     { icon: Settings, label: "Settings", path: "/dashboard/settings" }
   ];
   

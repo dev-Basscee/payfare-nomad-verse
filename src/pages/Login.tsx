@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -20,7 +19,7 @@ const Login = () => {
     setTimeout(() => {
       setIsLoading(false);
       toast.success("Login successful!");
-      window.location.href = "/dashboard";
+      window.location.href = "/home"; // Changed from /dashboard to /home
     }, 1500);
   };
   

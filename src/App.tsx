@@ -16,6 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import AccommodationsPage from "./pages/Accommodations";
 import TaxiPage from "./pages/Taxi";
 import Settings from "./pages/Settings";
+import Home from "./pages/Home";
+import History from "./pages/History";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,7 @@ const App = () => (
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/flights" element={<Flights />} />
             <Route path="/accommodations" element={<AccommodationsPage />} />
             <Route path="/transportation" element={<Transportation />} />
@@ -37,6 +40,7 @@ const App = () => (
             <Route path="/dashboard/flights" element={<Flights />} />
             <Route path="/dashboard/accommodations" element={<AccommodationsPage />} />
             <Route path="/dashboard/taxi" element={<TaxiPage />} />
+            <Route path="/dashboard/history" element={<History />} />
             <Route path="/dashboard/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

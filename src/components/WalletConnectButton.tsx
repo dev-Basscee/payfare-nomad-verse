@@ -15,9 +15,24 @@ const WalletConnectButton = () => {
   const [walletAddress, setWalletAddress] = useState<string>("");
   const navigate = useNavigate();
   
-  const handleConnect = () => {
-    // Redirect to login page
-    navigate("/login");
+  const handleConnect = async () => {
+    try {
+      // This is a placeholder for zkLogin integration
+      // In a real implementation, this would use Sui's zkLogin SDK
+      console.log("Initiating zkLogin flow...");
+      
+      // Simulate successful connection
+      setTimeout(() => {
+        const mockAddress = "0x" + Math.random().toString(16).slice(2, 12);
+        setWalletAddress(mockAddress);
+        setConnected(true);
+        toast.success("Wallet connected successfully!");
+        navigate("/home");
+      }, 1000);
+    } catch (error) {
+      console.error("Wallet connection failed:", error);
+      toast.error("Failed to connect wallet. Please try again.");
+    }
   };
   
   const handleDisconnect = () => {
