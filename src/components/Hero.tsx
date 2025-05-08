@@ -13,16 +13,16 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
           >
-            Explore Without <span className="text-payfare-300">Limits</span>
+            Travel Without <span className="text-payfare-300">Limits</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-xl max-w-2xl mx-auto text-gray-100"
-          >
-            The first decentralized travel booking platform built on blockchain technology.
-            Book flights, accommodations, and taxi services seamlessly.
+          ><em>
+            The first Sui decentralized travel booking platform built on blockchain technology.
+            Book flights, accommodations, and taxi services seamlessly.</em>
           </motion.p>
         </div>
         
