@@ -20,7 +20,7 @@ const Home = () => {
       <main className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome to PayFare</h1>
+            <h1 className="text-3xl font-bold text-[#1A1F2C]">Welcome to PayFare</h1>
             <p className="mt-2 text-lg text-gray-600">Your decentralized travel companion</p>
           </div>
           
@@ -48,7 +48,7 @@ const Home = () => {
                 </div>
               </Link>
               
-              <Link to="/transportation" className="block">
+              <Link to="/dashboard/taxi" className="block">
                 <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow hover:translate-y-[-4px] transition-transform border border-gray-100">
                   <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center mb-4">
                     <Car className="h-6 w-6 text-amber-600" />
@@ -109,11 +109,12 @@ const Home = () => {
                   <div className="p-4 border rounded-xl">
                     <div className="flex justify-between">
                       <div>
-                        <p className="font-medium">Wallet Connected</p>
-                        <p className="text-sm text-gray-500">First login</p>
+                        <p className="font-medium">Taxi Booked</p>
+                        <p className="text-sm text-gray-500">Airport pickup • JFK to Manhattan</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-gray-500">1 week ago</p>
+                        <p className="font-medium text-payfare-600">45 SUI</p>
+                        <p className="text-xs text-gray-500">5 days ago</p>
                       </div>
                     </div>
                   </div>
@@ -134,7 +135,7 @@ const Home = () => {
               <CardContent>
                 <div className="text-3xl font-bold text-gray-900 mb-2">2,458 SUI</div>
                 <p className="text-sm text-gray-500">Available for bookings</p>
-                <Button className="mt-4 bg-payfare-600 hover:bg-payfare-700 text-white">
+                <Button className="mt-4 bg-[#1A1F2C] hover:bg-[#065d88] text-white">
                   Add Funds
                 </Button>
               </CardContent>
@@ -150,7 +151,7 @@ const Home = () => {
               <CardContent>
                 <p className="text-sm text-gray-500 mb-4">Manage your account preferences and profile</p>
                 <Link to="/dashboard/settings">
-                  <Button variant="outline" className="border-payfare-500 text-payfare-700">
+                  <Button variant="outline" className="border-payfare-500 text-[#1A1F2C]">
                     View Settings
                   </Button>
                 </Link>
