@@ -9,22 +9,47 @@ import {
   ChevronLeft, 
   ChevronRight,
   History,
-  Home
+  Home,
+  LogIn,
+  User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   
-  const menuItems = [
-    { icon: Home, label: "Dashboard Home", path: "/dashboard" },
+  // Common menu items available to all users
+  const publicItems = [
+    { icon: Home, label: "Home", path: "/" },
+    { icon: Plane, label: "Flights", path: "/flights" },
+    { icon: Hotel, label: "Accommodations", path: "/accommodations" },
+    { icon: Car, label: "Transportation", path: "/transportation" }
+  ];
+  
+  // Menu items only for logged in users
+  const privateItems = [
+    { icon: Home, label: "Dashboard", path: "/dashboard" },
     { icon: Plane, label: "My Flights", path: "/dashboard/flights" },
-    { icon: Hotel, label: "Accommodation", path: "/dashboard/accommodations" },
+    { icon: Hotel, label: "My Accommodations", path: "/dashboard/accommodations" },
     { icon: Car, label: "Pick-Up Service", path: "/dashboard/taxi" },
     { icon: History, label: "Activity History", path: "/dashboard/history" },
     { icon: Settings, label: "Settings", path: "/dashboard/settings" }
   ];
+  
+  // Authentication menu items
+  const authItems = isLoggedIn 
+    ? [] // No auth items needed if logged in
+    : [
+        { icon: LogIn, label: "Login", path: "/login" },
+        { icon: User, label: "Sign Up", path: "/signup" }
+      ];
+  
+  // Combine menu items based on auth status
+  const menuItems = isLoggedIn 
+    ? [...publicItems, ...privateItems]
+    : [...publicItems, ...authItems];
   
   return (
     <aside 
@@ -51,7 +76,7 @@ const Sidebar = () => {
                 className={cn(
                   "flex items-center p-3 rounded-xl transition-all duration-200",
                   location.pathname === item.path 
-                    ? "bg-payfare-600 text-white" 
+                    ? "bg-[#065d88] text-white" 
                     : "hover:bg-white/10"
                 )}
               >

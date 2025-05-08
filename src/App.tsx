@@ -26,6 +26,15 @@ const isLoggedIn = () => {
   return localStorage.getItem("isLoggedIn") === "true";
 };
 
+// Protected route component
+const ProtectedRoute = ({ children }) => {
+  if (!isLoggedIn()) {
+    // Redirect to login if not logged in
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -42,16 +51,44 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             
-            {/* After login, always show the home page first */}
-            <Route path="/home" element={<Home />} />
+            {/* Protected routes - redirect to login if not authenticated */}
+            <Route path="/home" element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
             
-            {/* Dashboard routes */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/flights" element={<Flights />} />
-            <Route path="/dashboard/accommodations" element={<Accommodations />} />
-            <Route path="/dashboard/taxi" element={<TaxiPage />} />
-            <Route path="/dashboard/history" element={<History />} />
-            <Route path="/dashboard/settings" element={<Settings />} />
+            {/* Dashboard routes - all protected */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/flights" element={
+              <ProtectedRoute>
+                <Flights />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/accommodations" element={
+              <ProtectedRoute>
+                <Accommodations />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/taxi" element={
+              <ProtectedRoute>
+                <TaxiPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/history" element={
+              <ProtectedRoute>
+                <History />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/settings" element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            } />
             
             {/* Catch all */}
             <Route path="*" element={<NotFound />} />

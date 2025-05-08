@@ -20,11 +20,9 @@ const Navbar = () => {
             <Link to="/flights" className="text-gray-600 hover:text-[#065d88] transition-colors">Flights</Link>
             <Link to="/accommodations" className="text-gray-600 hover:text-[#065d88] transition-colors">Accommodations</Link>
             <Link to="/transportation" className="text-gray-600 hover:text-[#065d88] transition-colors">Taxi</Link>
-            <Link to="/dashboard" className="text-gray-600 hover:text-[#065d88] transition-colors">Dashboard</Link>
           </nav>
         </div>
         <div className="flex items-center space-x-4">
-          <Link to="/help" className="text-gray-600 hover:text-[#065d88] transition-colors hidden md:block">Help</Link>
           <WalletConnectButton />
         </div>
       </div>

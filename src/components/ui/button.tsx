@@ -10,15 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
+        default: "bg-[#1A1F2C] text-white hover:bg-[#065d88] hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
         outline:
-          "border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
+          "border-2 border-[#1A1F2C] bg-background text-[#1A1F2C] hover:bg-[#1A1F2C]/10 hover:text-[#1A1F2C] hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
-        ghost: "shadow-none hover:bg-accent hover:text-accent-foreground hover:shadow-[0_10px_70px_-15px_rgba(0,0,0,0.3)] hover:transform hover:-translate-y-1",
-        link: "shadow-none text-primary underline-offset-4 hover:underline",
+          "bg-[#065d88] text-white hover:bg-[#065d88]/80 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
+        ghost: "shadow-none hover:bg-[#1A1F2C]/10 hover:text-[#1A1F2C] hover:shadow-[0_10px_70px_-15px_rgba(0,0,0,0.3)] hover:transform hover:-translate-y-1",
+        link: "shadow-none text-[#1A1F2C] underline-offset-4 hover:underline",
       },
       size: {
         default: "h-12 px-8 py-3",
