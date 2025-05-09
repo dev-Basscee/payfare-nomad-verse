@@ -1,16 +1,27 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Car } from "lucide-react";
+import { CarTaxiFront } from "lucide-react";
 
 const Transportation = () => {
+  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
   useEffect(() => {
     document.title = "Taxi Services | PayFare";
   }, []);
+
+  const handleBookTaxi = () => {
+    if (isLoggedIn) {
+      navigate('/dashboard/taxi');
+    } else {
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -35,28 +46,31 @@ const Transportation = () => {
             <div className="relative h-64 w-64 mx-auto mb-10">
               <div className="absolute inset-0 bg-payfare-100 rounded-full animate-ping opacity-20"></div>
               <div className="relative bg-[#1A1F2C] text-white h-64 w-64 rounded-full flex items-center justify-center">
-                <Car className="h-20 w-20" />
+                <CarTaxiFront className="h-20 w-20" />
               </div>
             </div>
             
             <div className="space-y-6">
               <div className="bg-white p-8 rounded-2xl shadow-md">
-                <h2 className="text-2xl font-semibold mb-4">Access Taxi Services in Your Dashboard</h2>
+                <h2 className="text-2xl font-semibold mb-4">Our Airport Pickup Services</h2>
                 <p className="text-gray-600 mb-6">
-                  Our taxi pickup service is available for all registered users. Schedule airport pickups, 
-                  city transfers, and more through your personalized dashboard.
+                  SuiTravel offers reliable airport pickup services from all major Nigerian airports. 
+                  Book your ride now and enjoy a comfortable journey to your destination.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Link to="/dashboard/taxi">
-                    <Button className="bg-[#1A1F2C] hover:bg-[#065d88] text-white">
-                      Book in Dashboard
-                    </Button>
-                  </Link>
-                  <Link to="/signup">
-                    <Button variant="outline" className="border-payfare-500 text-[#1A1F2C]">
-                      Sign Up Now
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="bg-[#1A1F2C] hover:bg-[#065d88] text-white"
+                    onClick={handleBookTaxi}
+                  >
+                    Book Your Taxi Now
+                  </Button>
+                  {!isLoggedIn && (
+                    <Link to="/signup">
+                      <Button variant="outline" className="border-payfare-500 text-[#1A1F2C]">
+                        Sign Up For Benefits
+                      </Button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

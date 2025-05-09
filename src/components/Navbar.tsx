@@ -13,7 +13,7 @@ const Navbar = () => {
             <div className="relative h-8 w-8 rounded-full bg-gradient-to-r from-[#1A1F2C] to-[#065d88] flex items-center justify-center">
               <Plane className="text-white h-5 w-5" />
             </div>
-            <span className="font-bold text-xl text-[#1A1F2C]">PayFare</span>
+            <span className="font-bold text-xl text-[#1A1F2C]">SuiTravel</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 ml-10">
             <Link to="/" className="text-gray-600 hover:text-[#065d88] transition-colors">Home</Link>

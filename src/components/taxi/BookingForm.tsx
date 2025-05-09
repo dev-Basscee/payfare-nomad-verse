@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Car, Calendar, Clock, MapPin, Users } from "lucide-react";
+import { CarTaxiFront, Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,17 @@ const vehicleOptions = [
   { id: "suv", name: "SUV", capacity: "1-5", price: 35, image: "https://images.unsplash.com/photo-1572776685600-aca8c3456159?auto=format&fit=crop&q=80" },
   { id: "luxury", name: "Luxury", capacity: "1-3", price: 50, image: "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&q=80" },
   { id: "taxi", name: "Taxi", capacity: "1-4", price: 20, image: "https://images.unsplash.com/photo-1604556369143-081ea6824711?auto=format&fit=crop&q=80" },
+];
+
+// Nigerian airports list
+const nigerianAirports = [
+  "Murtala Muhammed International Airport (LOS)",
+  "Nnamdi Azikiwe International Airport (ABV)",
+  "Port Harcourt International Airport (PHC)",
+  "Mallam Aminu Kano International Airport (KAN)",
+  "Akanu Ibiam International Airport (ENU)",
+  "Margaret Ekpo International Airport (CBQ)",
+  "Sadiq Abubakar III International Airport (SKO)",
 ];
 
 interface BookingFormProps {
@@ -56,7 +67,7 @@ const BookingForm = ({
     <Card className="rounded-2xl shadow-lg">
       <CardHeader>
         <CardTitle className="text-xl flex items-center">
-          <Car className="mr-2 h-5 w-5 text-payfare-600" />
+          <CarTaxiFront className="mr-2 h-5 w-5 text-payfare-600" />
           Book Your Pickup
         </CardTitle>
       </CardHeader>
@@ -67,13 +78,16 @@ const BookingForm = ({
             <div>
               <Label htmlFor="pickup" className="mb-1 block">Pickup Location (Airport)</Label>
               <div className="relative">
-                <Input
+                <select
                   id="pickup"
                   value={pickup}
                   onChange={(e) => setPickup(e.target.value)}
-                  placeholder="Enter airport name"
-                  className="pl-10 rounded-xl py-6"
-                />
+                  className="w-full pl-10 rounded-xl py-3 border border-gray-300"
+                >
+                  {nigerianAirports.map((airport) => (
+                    <option key={airport} value={airport}>{airport}</option>
+                  ))}
+                </select>
                 <MapPin className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
               </div>
             </div>
@@ -85,10 +99,20 @@ const BookingForm = ({
                   id="destination"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
-                  placeholder="Enter hotel or address"
+                  placeholder="Enter hotel or address in Nigeria"
                   className="pl-10 rounded-xl py-6"
                   required
+                  list="nigerian-destinations"
                 />
+                <datalist id="nigerian-destinations">
+                  <option value="Eko Hotels & Suites, Victoria Island, Lagos" />
+                  <option value="Transcorp Hilton, Abuja" />
+                  <option value="Four Points by Sheraton, Victoria Island, Lagos" />
+                  <option value="Sheraton Abuja Hotel, Abuja" />
+                  <option value="Ibom Hotel & Golf Resort, Uyo" />
+                  <option value="The Wheatbaker, Ikoyi, Lagos" />
+                  <option value="Radisson Blu Anchorage Hotel, Victoria Island, Lagos" />
+                </datalist>
                 <MapPin className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
               </div>
             </div>
@@ -158,7 +182,7 @@ const BookingForm = ({
           
           <Button 
             type="submit" 
-            className="w-full bg-payfare-600 hover:bg-payfare-700 text-white py-6"
+            className="w-full bg-[#1A1F2C] hover:bg-[#065d88] text-white py-6"
             disabled={isLoading}
           >
             {isLoading ? "Booking..." : "Book Pickup"}
@@ -170,4 +194,4 @@ const BookingForm = ({
 };
 
 export default BookingForm;
-export { vehicleOptions };
+export { vehicleOptions, nigerianAirports };

@@ -6,7 +6,7 @@ import BookingForm from "@/components/taxi/BookingForm";
 import BookingSummary from "@/components/taxi/BookingSummary";
 
 const TaxiPage = () => {
-  const [pickup, setPickup] = useState("John F. Kennedy International Airport (JFK)");
+  const [pickup, setPickup] = useState("Murtala Muhammed International Airport (LOS)");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
