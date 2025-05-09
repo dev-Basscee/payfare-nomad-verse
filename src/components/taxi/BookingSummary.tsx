@@ -1,6 +1,7 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { vehicleOptions } from "./BookingForm";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Clock, Calendar, MapPin, Users, Car } from "lucide-react";
 
 interface BookingSummaryProps {
   pickup: string;
@@ -11,93 +12,120 @@ interface BookingSummaryProps {
   vehicleType: string;
 }
 
-const BookingSummary = ({
+const BookingSummary: React.FC<BookingSummaryProps> = ({
   pickup,
   destination,
   date,
   time,
   passengers,
-  vehicleType
-}: BookingSummaryProps) => {
+  vehicleType,
+}) => {
+  // Function to calculate estimated price
+  const calculatePrice = () => {
+    // Base prices by vehicle type
+    const basePrices = {
+      sedan: 50,
+      suv: 75,
+      luxury: 120,
+      van: 100,
+    };
+    
+    // Get base price or default to sedan price
+    const basePrice = basePrices[vehicleType as keyof typeof basePrices] || basePrices.sedan;
+    
+    // Add passenger factor
+    const passengerCount = parseInt(passengers) || 1;
+    const passengerFactor = passengerCount > 2 ? (passengerCount - 2) * 10 : 0;
+    
+    // Total price
+    return basePrice + passengerFactor;
+  };
+
+  const price = calculatePrice();
+  
+  const isComplete = pickup && destination && date && time && passengers && vehicleType;
+  
   return (
-    <Card className="rounded-2xl shadow-lg sticky top-24">
-      <CardHeader>
-        <CardTitle className="text-xl">Booking Summary</CardTitle>
-      </CardHeader>
-      
-      <CardContent className="space-y-6">
-        {pickup && destination && (
-          <div>
-            <h3 className="text-sm font-medium text-gray-500">Route</h3>
-            <div className="mt-1 space-y-2">
-              <div className="flex">
-                <div className="mr-3 mt-1">
-                  <div className="h-2 w-2 rounded-full bg-blue-500"></div>
-                </div>
-                <div>
-                  <p className="font-medium">{pickup}</p>
-                  <p className="text-xs text-gray-500">Pickup location</p>
-                </div>
+    <div className="space-y-6">
+      {!isComplete ? (
+        <div className="text-center py-6">
+          <p className="text-gray-400">Complete your booking details to see a summary</p>
+        </div>
+      ) : (
+        <>
+          <div className="space-y-4">
+            <div className="flex items-start space-x-3">
+              <MapPin className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-400">Pickup</p>
+                <p className="text-white">{pickup}</p>
               </div>
-              <div className="flex">
-                <div className="mr-3 ml-1 h-8">
-                  <div className="h-full w-[1px] bg-gray-300"></div>
-                </div>
+            </div>
+            
+            <div className="flex items-start space-x-3">
+              <MapPin className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-400">Destination</p>
+                <p className="text-white">{destination}</p>
               </div>
-              <div className="flex">
-                <div className="mr-3 mt-1">
-                  <div className="h-2 w-2 rounded-full bg-green-500"></div>
-                </div>
-                <div>
-                  <p className="font-medium">{destination || "Your destination"}</p>
-                  <p className="text-xs text-gray-500">Drop-off location</p>
-                </div>
+            </div>
+            
+            <div className="flex items-start space-x-3">
+              <Calendar className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-400">Date</p>
+                <p className="text-white">{date}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-3">
+              <Clock className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-400">Time</p>
+                <p className="text-white">{time}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-3">
+              <Users className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-400">Passengers</p>
+                <p className="text-white">{passengers}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-3">
+              <Car className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-400">Vehicle Type</p>
+                <p className="text-white">{vehicleType.charAt(0).toUpperCase() + vehicleType.slice(1)}</p>
               </div>
             </div>
           </div>
-        )}
-        
-        <div>
-          <h3 className="text-sm font-medium text-gray-500">Pickup Details</h3>
-          <p className="mt-1 font-medium">
-            {date ? (
-              <>
-                {new Date(date).toLocaleDateString('en-US', { 
-                  month: 'long', 
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
-                {time && ` at ${time}`}
-              </>
-            ) : (
-              "Select date and time"
-            )}
-          </p>
-        </div>
-        
-        <div>
-          <h3 className="text-sm font-medium text-gray-500">Vehicle</h3>
-          <p className="mt-1 font-medium">
-            {vehicleOptions.find(v => v.id === vehicleType)?.name || "Select a vehicle"}
-          </p>
-        </div>
-        
-        <div>
-          <h3 className="text-sm font-medium text-gray-500">Passengers</h3>
-          <p className="mt-1 font-medium">{passengers}</p>
-        </div>
-        
-        <div className="border-t pt-4 mt-4">
-          <div className="flex justify-between items-center">
-            <span className="font-medium">Total Price</span>
-            <span className="text-xl font-bold text-payfare-700">
-              {vehicleOptions.find(v => v.id === vehicleType)?.price || 0} SUI
-            </span>
+          
+          <div className="border-t border-payfare-600 pt-4">
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-400">Base fare</span>
+              <span className="text-white">{price - 10} SUI</span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-400">Booking fee</span>
+              <span className="text-white">10 SUI</span>
+            </div>
+            <div className="flex justify-between font-bold text-lg mt-4">
+              <span>Total</span>
+              <span className="text-blue-400">{price} SUI</span>
+            </div>
           </div>
-          <p className="text-xs text-gray-500 mt-1">Includes all taxes and fees</p>
-        </div>
-      </CardContent>
-    </Card>
+          
+          <Button 
+            className="w-full bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1"
+          >
+            Confirm and Pay
+          </Button>
+        </>
+      )}
+    </div>
   );
 };
 

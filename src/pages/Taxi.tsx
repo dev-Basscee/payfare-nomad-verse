@@ -97,7 +97,7 @@ const TaxiPage = () => {
                   vehicleType={vehicleType}
                   setVehicleType={setVehicleType}
                   airports={airports}
-                  destinationOptions={destinationOptions[pickup] || []}
+                  destinationOptions={destinationOptions[pickup as keyof typeof destinationOptions] || []}
                 />
               </CardContent>
             </Card>

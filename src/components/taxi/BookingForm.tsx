@@ -1,33 +1,21 @@
 
-import { useState } from "react";
-import { CarTaxiFront, Calendar, Clock, MapPin, Users } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import VehicleOption from "./VehicleOption";
-import { toast } from "sonner";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon, Users, Car } from "lucide-react";
 
-// Define vehicle options
-const vehicleOptions = [
-  { id: "sedan", name: "Sedan", capacity: "1-3", price: 25, image: "https://images.unsplash.com/photo-1577494251483-1a2a75388bbe?auto=format&fit=crop&q=80" },
-  { id: "suv", name: "SUV", capacity: "1-5", price: 35, image: "https://images.unsplash.com/photo-1572776685600-aca8c3456159?auto=format&fit=crop&q=80" },
-  { id: "luxury", name: "Luxury", capacity: "1-3", price: 50, image: "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&q=80" },
-  { id: "taxi", name: "Taxi", capacity: "1-4", price: 20, image: "https://images.unsplash.com/photo-1604556369143-081ea6824711?auto=format&fit=crop&q=80" },
-];
-
-// Nigerian airports list
-const nigerianAirports = [
-  "Murtala Muhammed International Airport (LOS)",
-  "Nnamdi Azikiwe International Airport (ABV)",
-  "Port Harcourt International Airport (PHC)",
-  "Mallam Aminu Kano International Airport (KAN)",
-  "Akanu Ibiam International Airport (ENU)",
-  "Margaret Ekpo International Airport (CBQ)",
-  "Sadiq Abubakar III International Airport (SKO)",
-];
-
-interface BookingFormProps {
+export interface BookingFormProps {
   pickup: string;
   setPickup: (value: string) => void;
   destination: string;
@@ -40,158 +28,170 @@ interface BookingFormProps {
   setPassengers: (value: string) => void;
   vehicleType: string;
   setVehicleType: (value: string) => void;
+  airports: { value: string; label: string }[];
+  destinationOptions: string[];
 }
 
-const BookingForm = ({ 
-  pickup, setPickup, 
-  destination, setDestination, 
-  date, setDate, 
-  time, setTime, 
-  passengers, setPassengers, 
-  vehicleType, setVehicleType 
-}: BookingFormProps) => {
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const handleBooking = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate booking process
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Your pickup has been booked successfully!");
-    }, 1500);
+const BookingForm: React.FC<BookingFormProps> = ({
+  pickup,
+  setPickup,
+  destination,
+  setDestination,
+  date,
+  setDate,
+  time,
+  setTime,
+  passengers,
+  setPassengers,
+  vehicleType,
+  setVehicleType,
+  airports,
+  destinationOptions,
+}) => {
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
+    date ? new Date(date) : undefined
+  );
+
+  const handleDateChange = (newDate: Date | undefined) => {
+    if (newDate) {
+      setDate(format(newDate, "yyyy-MM-dd"));
+      setSelectedDate(newDate);
+    }
   };
 
   return (
-    <Card className="rounded-2xl shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-xl flex items-center">
-          <CarTaxiFront className="mr-2 h-5 w-5 text-payfare-600" />
-          Book Your Pickup
-        </CardTitle>
-      </CardHeader>
-      
-      <CardContent>
-        <form onSubmit={handleBooking} className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="pickup" className="mb-1 block">Pickup Location (Airport)</Label>
-              <div className="relative">
-                <select
-                  id="pickup"
-                  value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                  className="w-full pl-10 rounded-xl py-3 border border-gray-300"
-                >
-                  {nigerianAirports.map((airport) => (
-                    <option key={airport} value={airport}>{airport}</option>
-                  ))}
-                </select>
-                <MapPin className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
-              </div>
-            </div>
-            
-            <div>
-              <Label htmlFor="destination" className="mb-1 block">Destination</Label>
-              <div className="relative">
-                <Input
-                  id="destination"
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                  placeholder="Enter hotel or address in Nigeria"
-                  className="pl-10 rounded-xl py-6"
-                  required
-                  list="nigerian-destinations"
-                />
-                <datalist id="nigerian-destinations">
-                  <option value="Eko Hotels & Suites, Victoria Island, Lagos" />
-                  <option value="Transcorp Hilton, Abuja" />
-                  <option value="Four Points by Sheraton, Victoria Island, Lagos" />
-                  <option value="Sheraton Abuja Hotel, Abuja" />
-                  <option value="Ibom Hotel & Golf Resort, Uyo" />
-                  <option value="The Wheatbaker, Ikoyi, Lagos" />
-                  <option value="Radisson Blu Anchorage Hotel, Victoria Island, Lagos" />
-                </datalist>
-                <MapPin className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="date" className="mb-1 block">Pickup Date</Label>
-                <div className="relative">
-                  <Input
-                    id="date"
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="pl-10 rounded-xl py-6"
-                    required
-                  />
-                  <Calendar className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
-                </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="time" className="mb-1 block">Pickup Time</Label>
-                <div className="relative">
-                  <Input
-                    id="time"
-                    type="time"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    className="pl-10 rounded-xl py-6"
-                    required
-                  />
-                  <Clock className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <Label htmlFor="passengers" className="mb-1 block">Number of Passengers</Label>
-              <div className="relative">
-                <Input
-                  id="passengers"
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={passengers}
-                  onChange={(e) => setPassengers(e.target.value)}
-                  className="pl-10 rounded-xl py-6"
-                />
-                <Users className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
-              </div>
-            </div>
-          </div>
-          
-          <div className="space-y-3">
-            <Label className="block">Vehicle Type</Label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {vehicleOptions.map((vehicle) => (
-                <VehicleOption
-                  key={vehicle.id}
-                  vehicle={vehicle}
-                  isSelected={vehicleType === vehicle.id}
-                  onSelect={setVehicleType}
-                />
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <label htmlFor="pickup" className="block text-sm text-gray-300">Airport Pickup</label>
+        <Select value={pickup} onValueChange={setPickup}>
+          <SelectTrigger className="bg-payfare-800 border-payfare-600 focus:ring-payfare-500">
+            <SelectValue placeholder="Select airport" />
+          </SelectTrigger>
+          <SelectContent className="bg-payfare-800 border-payfare-600 text-white">
+            {airports.map((airport) => (
+              <SelectItem key={airport.value} value={airport.value} className="hover:bg-payfare-700">
+                {airport.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-1">
+        <label htmlFor="destination" className="block text-sm text-gray-300">Destination</label>
+        <Select value={destination} onValueChange={setDestination}>
+          <SelectTrigger className="bg-payfare-800 border-payfare-600 focus:ring-payfare-500">
+            <SelectValue placeholder="Select destination" />
+          </SelectTrigger>
+          <SelectContent className="bg-payfare-800 border-payfare-600 text-white">
+            {destinationOptions.map((option) => (
+              <SelectItem key={option} value={option} className="hover:bg-payfare-700">
+                {option}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <label htmlFor="date" className="block text-sm text-gray-300">Date</label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-full justify-start text-left font-normal bg-payfare-800 border-payfare-600",
+                  !date && "text-gray-400"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(new Date(date), "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 bg-payfare-800 border-payfare-600">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={handleDateChange}
+                initialFocus
+                className="p-3 pointer-events-auto bg-payfare-800 text-white"
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        <div className="space-y-1">
+          <label htmlFor="time" className="block text-sm text-gray-300">Time</label>
+          <Select value={time} onValueChange={setTime}>
+            <SelectTrigger className="bg-payfare-800 border-payfare-600 focus:ring-payfare-500">
+              <SelectValue placeholder="Select time" />
+            </SelectTrigger>
+            <SelectContent className="bg-payfare-800 border-payfare-600 text-white">
+              {["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", 
+                "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
+                "12:00", "13:00", "14:00", "15:00", "16:00", "17:00",
+                "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"].map((timeOption) => (
+                <SelectItem key={timeOption} value={timeOption} className="hover:bg-payfare-700">
+                  {timeOption}
+                </SelectItem>
               ))}
-            </div>
-          </div>
-          
-          <Button 
-            type="submit" 
-            className="w-full bg-[#1A1F2C] hover:bg-[#065d88] text-white py-6"
-            disabled={isLoading}
-          >
-            {isLoading ? "Booking..." : "Book Pickup"}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <label htmlFor="passengers" className="block text-sm text-gray-300">Passengers</label>
+          <Select value={passengers} onValueChange={setPassengers}>
+            <SelectTrigger className="bg-payfare-800 border-payfare-600 focus:ring-payfare-500">
+              <SelectValue placeholder="Passengers">
+                <div className="flex items-center">
+                  <Users className="mr-2 h-4 w-4" />
+                  <span>{passengers}</span>
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="bg-payfare-800 border-payfare-600 text-white">
+              {["1", "2", "3", "4", "5", "6"].map((num) => (
+                <SelectItem key={num} value={num} className="hover:bg-payfare-700">
+                  {num} {parseInt(num) === 1 ? "passenger" : "passengers"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-1">
+          <label htmlFor="vehicleType" className="block text-sm text-gray-300">Vehicle Type</label>
+          <Select value={vehicleType} onValueChange={setVehicleType}>
+            <SelectTrigger className="bg-payfare-800 border-payfare-600 focus:ring-payfare-500">
+              <SelectValue placeholder="Vehicle type">
+                <div className="flex items-center">
+                  <Car className="mr-2 h-4 w-4" />
+                  <span>{vehicleType.charAt(0).toUpperCase() + vehicleType.slice(1)}</span>
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="bg-payfare-800 border-payfare-600 text-white">
+              <SelectItem value="sedan" className="hover:bg-payfare-700">Sedan</SelectItem>
+              <SelectItem value="suv" className="hover:bg-payfare-700">SUV</SelectItem>
+              <SelectItem value="luxury" className="hover:bg-payfare-700">Luxury</SelectItem>
+              <SelectItem value="van" className="hover:bg-payfare-700">Van</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <Button 
+        type="submit" 
+        className="w-full bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1"
+      >
+        Book Your Ride
+      </Button>
+    </div>
   );
 };
 
 export default BookingForm;
-export { vehicleOptions, nigerianAirports };
