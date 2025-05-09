@@ -10,15 +10,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[#1A1F2C] text-white hover:bg-[#065d88] hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
+        default: "bg-payfare-700 text-white hover:bg-payfare-600 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
         outline:
-          "border-2 border-[#1A1F2C] bg-background text-[#1A1F2C] hover:bg-[#1A1F2C]/10 hover:text-[#1A1F2C] hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
+          "border-2 border-payfare-500 bg-transparent text-white hover:bg-payfare-700/20 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
         secondary:
-          "bg-[#065d88] text-white hover:bg-[#065d88]/80 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
-        ghost: "shadow-none hover:bg-[#1A1F2C]/10 hover:text-[#1A1F2C] hover:shadow-[0_10px_70px_-15px_rgba(0,0,0,0.3)] hover:transform hover:-translate-y-1",
-        link: "shadow-none text-[#1A1F2C] underline-offset-4 hover:underline",
+          "bg-payfare-600 text-white hover:bg-payfare-500 hover:shadow-[0_15px_70px_-10px_rgba(0,0,0,0.4)] hover:transform hover:-translate-y-1",
+        ghost: "shadow-none hover:bg-payfare-700/20 hover:text-white hover:shadow-[0_10px_70px_-15px_rgba(0,0,0,0.3)] hover:transform hover:-translate-y-1",
+        link: "shadow-none text-blue-400 underline-offset-4 hover:underline",
+        gradient: "bg-gradient-to-r from-payfare-500 to-blue-600 text-white hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:transform hover:-translate-y-1",
       },
       size: {
         default: "h-12 px-8 py-3",

@@ -64,17 +64,17 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				payfare: {
-					50: '#ebfeff',
-					100: '#cefbff',
-					200: '#a4f2ff',
-					300: '#67e4ff',
-					400: '#22ceff',
-					500: '#06aff0',
-					600: '#008ecd',
-					700: '#0070a6',
-					800: '#065d88',
-					900: '#0b4e71',
-					950: '#083247',
+					50: '#e6f0f8',
+					100: '#cce1f1',
+					200: '#99c3e3',
+					300: '#66a5d5',
+					400: '#3387c7',
+					500: '#0069b9',
+					600: '#0054a6',
+					700: '#0B1F3A',
+					800: '#051b33',
+					900: '#030f1f',
+					950: '#01070f',
 				},
 			},
 			borderRadius: {
@@ -107,12 +107,22 @@ export default {
 					'0%': { opacity: '1', transform: 'translateY(0)' },
 					'100%': { opacity: '0', transform: 'translateY(10px)' }
 				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 5px 2px rgba(66, 153, 225, 0.2)' },
+					'50%': { boxShadow: '0 0 20px 5px rgba(66, 153, 225, 0.4)' }
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'glow': 'glow 3s ease-in-out infinite'
 			}
 		}
 	},

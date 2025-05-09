@@ -15,14 +15,12 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import TaxiPage from "./pages/Taxi";
 import Settings from "./pages/Settings";
-import Home from "./pages/Home";
 import History from "./pages/History";
 
 const queryClient = new QueryClient();
 
-// This would normally come from an auth provider
+// Authentication check function
 const isLoggedIn = () => {
-  // Mock implementation - would actually check authentication state
   return localStorage.getItem("isLoggedIn") === "true";
 };
 
@@ -52,13 +50,6 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             
             {/* Protected routes - redirect to login if not authenticated */}
-            <Route path="/home" element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            } />
-            
-            {/* Dashboard routes - all protected */}
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
@@ -87,6 +78,14 @@ const App = () => (
             <Route path="/dashboard/settings" element={
               <ProtectedRoute>
                 <Settings />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/rewards" element={
+              <ProtectedRoute>
+                <div className="flex-1 p-6">
+                  <h1 className="text-3xl font-bold text-white mb-6">Rewards</h1>
+                  <p className="text-gray-300">Your rewards and loyalty points will appear here.</p>
+                </div>
               </ProtectedRoute>
             } />
             
