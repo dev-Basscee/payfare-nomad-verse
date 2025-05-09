@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Clock, Calendar, MapPin, Users, Car } from "lucide-react";
+import { toast } from "sonner";
 
 interface BookingSummaryProps {
   pickup: string;
@@ -39,6 +40,13 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
     
     // Total price
     return basePrice + passengerFactor;
+  };
+
+  const handleConfirmPayment = () => {
+    toast.success("Booking confirmed! Your driver will meet you at the airport.", {
+      description: "Payment of " + price + " SUI has been processed successfully.",
+      duration: 5000,
+    });
   };
 
   const price = calculatePrice();
@@ -119,7 +127,8 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
           </div>
           
           <Button 
-            className="w-full bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1"
+            onClick={handleConfirmPayment}
+            className="w-full bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_70px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1"
           >
             Confirm and Pay
           </Button>
