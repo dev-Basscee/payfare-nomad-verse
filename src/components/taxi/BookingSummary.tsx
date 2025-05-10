@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Clock, Calendar, MapPin, Users, Car } from "lucide-react";
+import { Clock, Calendar, MapPin, Users, Car, Lock, Edit } from "lucide-react";
 import { toast } from "sonner";
 
 interface BookingSummaryProps {
@@ -21,6 +21,10 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
   passengers,
   vehicleType,
 }) => {
+  const [isBooked, setIsBooked] = useState(false);
+  const [isEditable, setIsEditable] = useState(true);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+
   // Function to calculate estimated price
   const calculatePrice = () => {
     // Base prices by vehicle type
@@ -43,10 +47,53 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
   };
 
   const handleConfirmPayment = () => {
+    setIsBooked(true);
+    setTimeRemaining(40 * 60); // 40 minutes in seconds
     toast.success("Booking confirmed! Your driver will meet you at the airport.", {
-      description: "Payment of " + price + " SUI has been processed successfully.",
+      description: "Payment of " + price + " USDC has been processed successfully.",
       duration: 5000,
     });
+  };
+
+  const handleEditBooking = () => {
+    toast.info("You can edit your booking details now.", {
+      description: "Your changes will be saved automatically.",
+      duration: 3000,
+    });
+  };
+
+  // Timer effect for 40-minute edit window
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    
+    if (isBooked && timeRemaining !== null && timeRemaining > 0) {
+      interval = setInterval(() => {
+        setTimeRemaining((prev) => {
+          if (prev !== null && prev > 0) {
+            return prev - 1;
+          }
+          return 0;
+        });
+      }, 1000);
+    } else if (timeRemaining === 0) {
+      setIsEditable(false);
+      toast.info("Your booking is now immutable.", {
+        description: "No further changes can be made to this booking.",
+        duration: 5000,
+      });
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isBooked, timeRemaining]);
+
+  // Format the remaining time
+  const formatTime = (seconds: number | null) => {
+    if (seconds === null) return "--:--";
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
   const price = calculatePrice();
@@ -114,24 +161,58 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
           <div className="border-t border-payfare-600 pt-4">
             <div className="flex justify-between mb-2">
               <span className="text-gray-400">Base fare</span>
-              <span className="text-white">{price - 10} SUI</span>
+              <span className="text-white">{price - 10} USDC</span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="text-gray-400">Booking fee</span>
-              <span className="text-white">10 SUI</span>
+              <span className="text-white">10 USDC</span>
             </div>
             <div className="flex justify-between font-bold text-lg mt-4">
               <span>Total</span>
-              <span className="text-blue-400">{price} SUI</span>
+              <span className="text-blue-400">{price} USDC</span>
             </div>
           </div>
           
-          <Button 
-            onClick={handleConfirmPayment}
-            className="w-full bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_70px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1"
-          >
-            Confirm and Pay
-          </Button>
+          {isBooked ? (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-t border-payfare-600 pt-4">
+                <div className="flex items-center">
+                  {isEditable ? (
+                    <Edit className="h-5 w-5 text-blue-400 mr-2" />
+                  ) : (
+                    <Lock className="h-5 w-5 text-blue-400 mr-2" />
+                  )}
+                  <span className={isEditable ? "text-blue-400" : "text-gray-400"}>
+                    {isEditable ? "Booking can be edited" : "Booking is immutable"}
+                  </span>
+                </div>
+                {isEditable && (
+                  <span className="text-gray-400">
+                    Time left: <span className="text-blue-400">{formatTime(timeRemaining)}</span>
+                  </span>
+                )}
+              </div>
+              
+              <Button 
+                onClick={handleEditBooking}
+                disabled={!isEditable}
+                className={`w-full ${
+                  isEditable
+                    ? "bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_70px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1"
+                    : "bg-gray-700 cursor-not-allowed"
+                }`}
+              >
+                {isEditable ? "Edit Booking" : "Booking Finalized"}
+              </Button>
+            </div>
+          ) : (
+            <Button 
+              onClick={handleConfirmPayment}
+              className="w-full bg-gradient-to-r from-payfare-500 to-blue-600 hover:shadow-[0_0_70px_rgba(59,130,246,0.5)] transition-all duration-300 hover:-translate-y-1 rounded-full"
+            >
+              Confirm and Pay with USDC
+            </Button>
+          )}
         </>
       )}
     </div>
